@@ -1,0 +1,43 @@
+
+    // Censo Esportivo: separate namespace, no anonymous personal-data reads.
+    function censoAdmin() {
+      return request.auth != null && (isAdmin() || request.auth.token.get('censoAdmin', false) == true);
+    }
+    function censoReader() {
+      return request.auth != null && (censoAdmin() || request.auth.token.get('censoReader', false) == true);
+    }
+    match /censo_v1_config/active {
+      allow read: if censoReader();
+      allow create, update: if censoAdmin()
+        && request.resource.data.keys().hasOnly(['snapshot', 'updatedAt', 'updatedBy'])
+        && request.resource.data.snapshot is string
+        && request.resource.data.snapshot.size() <= 100
+        && request.resource.data.updatedBy == request.auth.uid;
+      allow delete: if false;
+    }
+    match /censo_v1_snapshots/{snapshotId} {
+      allow read: if censoReader();
+      allow create: if censoAdmin()
+        && request.resource.data.schemaVersion == 1
+        && request.resource.data.expectedParticipants is int
+        && request.resource.data.expectedEnrollments is int;
+      allow update, delete: if false;
+      match /participants/{personId} {
+        allow read: if censoReader();
+        allow create: if censoAdmin()
+          && !exists(/databases/$(database)/documents/censo_v1_snapshots/$(snapshotId))
+          && request.resource.data.id is string
+          && request.resource.data.name is string
+          && request.resource.data.name.size() > 0;
+        allow update, delete: if false;
+      }
+      match /enrollments/{enrollmentId} {
+        allow read: if censoReader();
+        allow create: if censoAdmin()
+          && !exists(/databases/$(database)/documents/censo_v1_snapshots/$(snapshotId))
+          && request.resource.data.id is string
+          && request.resource.data.name is string;
+        allow update, delete: if false;
+      }
+    }
+

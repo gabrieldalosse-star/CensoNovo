@@ -1,0 +1,15 @@
+{
+  "ignored": 3557,
+  "ignoredStudents": 1635,
+  "ignoredEnrollments": 1922,
+  "repeatedEnrollments": 121,
+  "rawEnrollments": 2210,
+  "issueCount": 1,
+  "issues": [
+    {
+      "type": "Matrícula sem turma",
+      "name": "MARLI MACIEL F. DIAS",
+      "row": 2411
+    }
+  ]
+}

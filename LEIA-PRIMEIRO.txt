@@ -1,0 +1,11 @@
+CENSO ESPORTIVO DE VOTORANTIM
+
+Publique apenas o conteudo da pasta site-github. O workflow publica somente public/.
+
+NAO PUBLIQUE a pasta dados-privados: contem nomes, contatos e coordenadas de participantes.
+
+Veja site-github/README.md para publicar no GitHub Pages, configurar Firebase e explorar a base privada.
+
+Para testar localmente: entre em site-github, execute node serve.mjs e abra http://127.0.0.1:8765.
+
+Na Visao de gestao, importe dados-privados/base-censo.json e clique Aplicar novos registros. A leitura e local, sem envio automatico a nuvem.

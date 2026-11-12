@@ -1,0 +1,1 @@
+{"name":"censo-esportivo-votorantim","private":true,"type":"module","scripts":{"test":"node --test tests/*.test.mjs","start":"node serve.mjs"}}
